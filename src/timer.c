@@ -27,7 +27,7 @@ void timer_init() {
     *(tp->base + TLOAD) = 0x100;
     // CntlReg=011-0110=|En|Pe|IntE|-|scal=01|32bit|0=wrap|=0x66
     *(tp->base + TCNTL) = 0x66;
-    *(tp->base + TBGLOAD) = 0x1C00;           // timer counter value
+    *(tp->base + TBGLOAD) = 0xF500;           // timer counter value
     tp->tick = tp->hh = tp->mm = tp->ss = 0;  // initialize wall clock
     strcpy((char*)tp->clock, "00:00:00");
   }
@@ -36,7 +36,7 @@ void timer_init() {
 void timer_handler(int n) {
   TIMER* t = &timer[n];
   t->tick++;
-  if (t->tick == 60) {
+  if (t->tick == 1) {
     t->tick = 0;
     t->ss++;
     if (t->ss == 60) {
